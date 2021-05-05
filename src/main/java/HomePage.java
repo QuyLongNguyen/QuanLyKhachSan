@@ -40,6 +40,7 @@ public class HomePage extends JFrame {
 	private JTable table;
 	private JTable table_1;
 	private JTable table_2;
+	private JTable table_3;
 
 	/**
 	 * Launch the application.
@@ -89,8 +90,12 @@ public class HomePage extends JFrame {
 	
 		mnKhach.add(menu_khach_thue);
 		
-		JMenu mnNewMenu_2 = new JMenu("New menu");
-		menuBar.add(mnNewMenu_2);
+		JMenu mnHoaDon = new JMenu("Hóa đơn");
+		menuBar.add(mnHoaDon);
+		
+		JMenuItem menu_hoa_don = new JMenuItem("Xem");
+		
+		mnHoaDon.add(menu_hoa_don);
 		
 		final JTabbedPane tab_content = new JTabbedPane(JTabbedPane.TOP);
 		
@@ -218,22 +223,37 @@ public class HomePage extends JFrame {
 		panel_3.setLayout(gl_panel_3);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(menuBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(tab_content, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 572, Short.MAX_VALUE))
+						.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+						.addComponent(tab_content, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(0))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(tab_content))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(436, Short.MAX_VALUE))
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(tab_content, GroupLayout.PREFERRED_SIZE, 631, GroupLayout.PREFERRED_SIZE))
+						.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
+		
+		JPanel panel_4 = new JPanel();
+		tab_content.addTab("New tab", null, panel_4, null);
+		panel_4.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel("Danh sách hóa đơn");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(220, 24, 189, 43);
+		panel_4.add(lblNewLabel_3);
+		
+		table_3 = new JTable();
+		table_3.setBounds(40, 100, 559, 415);
+		panel_4.add(table_3);
 		contentPane.setLayout(gl_contentPane);
 		
 		
@@ -353,6 +373,46 @@ public class HomePage extends JFrame {
 					sql.printStackTrace();
 				}
 				
+			}
+		});
+		menu_hoa_don.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tab_content.setSelectedIndex(4);
+				try {
+					Connection conn = DBConnectioner.getConnection();
+					PreparedStatement stt = conn.prepareStatement("select * from hoadon;");
+					ResultSet rs = stt.executeQuery();
+					
+					String[] columnNames = {"Hóa đơn", "Mã phòng", "Mã khách","Mã loại","Đơn giá","Ngày thuê","Ngày trả","Số ngày","Tổng tiền"};
+					DefaultTableModel tableModel = new DefaultTableModel(columnNames,0);
+					tableModel.addRow(columnNames);
+					int size = 0;
+					while (rs.next()) {
+					    String MaHD = rs.getString("MaHoaDon");
+					    String MaPhong = rs.getString("MaPhong");
+					    String MaKhach = rs.getString("MaKhach");
+					    String MaLoai = rs.getString("MaLoai");
+					    Integer DonGia = rs.getInt("DonGia");
+					    java.util.Date Thue = rs.getDate("NgayThue");
+					    java.util.Date Tra = rs.getDate("NgayTra");
+					    Integer Ngay = rs.getInt("SoNgay");
+					    Float Tien = rs.getFloat("TongTien");
+					    // create a single array of one row's worth of data
+					    String[] data = {MaHD,MaPhong,MaKhach,MaLoai,DonGia.toString(),Thue.toString(),Tra.toString(),Ngay.toString(),Tien.toString()} ;
+
+					    // and add this row of data into the table model
+					    tableModel.addRow(data);
+					    size++;
+					}
+					if(size == 0) {
+						JOptionPane.showMessageDialog(table_3,"Không có dữ liệu");
+					}
+					table_3.setModel(tableModel);
+					table_3.setDefaultEditor(Object.class, null);
+					conn.close();
+				}catch(SQLException sql) {
+					sql.printStackTrace();
+				}
 			}
 		});
 	}
