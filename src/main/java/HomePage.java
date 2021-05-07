@@ -216,6 +216,12 @@ public class HomePage extends JFrame {
 		btn_dat_phong.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JButton btn_dat_phong_1 = new JButton("Thêm phòng");
+		btn_dat_phong_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddRoom ar = new AddRoom();
+				ar.setVisible(true);
+			}
+		});
 		btn_dat_phong_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
