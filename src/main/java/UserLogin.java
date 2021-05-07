@@ -80,7 +80,7 @@ public class UserLogin extends JFrame  {
 		txt_username = new JTextField();
 		txt_username.setColumns(10);
 		
-		JButton btn_login = new JButton("\u0110\u0103ng nh\u1EADp");
+		final JButton btn_login = new JButton("\u0110\u0103ng nh\u1EADp");
 		
 		btn_login.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btn_login.addActionListener(new ActionListener() {
@@ -100,11 +100,9 @@ public class UserLogin extends JFrame  {
                         HomePage ah = new HomePage();
                         ah.setTitle("Chao mung");
                         ah.setVisible(true);
-					JOptionPane jp = new JOptionPane("Chúc mừng đăng nhập thành công");
-							
 					}
 					else {
-						JOptionPane jp = new JOptionPane("Chúc mừng đăng nhập không thành công");
+						JOptionPane.showMessageDialog(txt_username, "Đăng nhập không thành công");
 					}
 					conn.close();
 				}catch(SQLException sql) {
