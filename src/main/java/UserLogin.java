@@ -90,16 +90,24 @@ public class UserLogin extends JFrame  {
 				
 				try {
 					Connection conn = DBConnectioner.getConnection();
-					PreparedStatement stt = conn.prepareStatement("Select username,password from user where username = ? and password = ?");
+					PreparedStatement stt = conn.prepareStatement("Select * from user where username = ? and password = ?");
 					stt.setString(1, userName);
 					stt.setString(2, passWord);
 					ResultSet rs = stt.executeQuery();
 					String t;
 					if(rs.next()) {
 						dispose();
-                        HomePage ah = new HomePage();
-                        ah.setTitle("Chao mung");
-                        ah.setVisible(true);
+						int permission = rs.getInt("Permission");
+						if(permission == 0) {
+							HomePage ah = new HomePage();
+	                        ah.setTitle("Chao mung");
+	                        ah.setVisible(true);
+						}
+						else {
+							HomePage2 ah = new HomePage2();
+	                        ah.setTitle("Chao mung");
+	                        ah.setVisible(true);
+						}
 					}
 					else {
 						JOptionPane.showMessageDialog(txt_username, "Đăng nhập không thành công");

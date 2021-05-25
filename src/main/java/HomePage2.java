@@ -57,7 +57,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
-public class HomePage extends JFrame {
+public class HomePage2 extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
@@ -74,7 +74,7 @@ public class HomePage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomePage frame = new HomePage();
+					HomePage2 frame = new HomePage2();
 					frame.setVisible(true);
 					// frame.setResizable(false);
 				} catch (Exception e) {
@@ -87,7 +87,7 @@ public class HomePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public HomePage() {
+	public HomePage2() {
 
 		setTitle("Qu\u1EA3n l\u00FD kh\u00E1ch s\u1EA1n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -200,21 +200,7 @@ public class HomePage extends JFrame {
 		panel_1.add(cbx_tim_kiem);
 
 		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (table.getSelectedColumn() == 3) {
-					String Maphong = (String) table.getValueAt(table.getSelectedRow(), 0);
-					UpdateRoom ur = new UpdateRoom(Maphong);
-					ur.setVisible(true);
-				}
-				if (table.getSelectedColumn() == 4) {
-					String Maphong = (String) table.getValueAt(table.getSelectedRow(), 0);
-					DeleteRoom dr = new DeleteRoom(Maphong);
-					dr.setVisible(true);
-				}
-			}
-		});
+	
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 
@@ -232,15 +218,6 @@ public class HomePage extends JFrame {
 			}
 		});
 		btn_dat_phong.setFont(new Font("Tahoma", Font.PLAIN, 16));
-
-		JButton btn_dat_phong_1 = new JButton("Thêm phòng");
-		btn_dat_phong_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AddRoom ar = new AddRoom();
-				ar.setVisible(true);
-			}
-		});
-		btn_dat_phong_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 				gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -255,17 +232,12 @@ public class HomePage extends JFrame {
 										.addGap(250))
 						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup().addGap(37)
 								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel.createSequentialGroup()
-												.addComponent(btn_dat_phong_1, GroupLayout.PREFERRED_SIZE, 109,
-														GroupLayout.PREFERRED_SIZE)
-												.addContainerGap())
+										.addGroup(gl_panel.createSequentialGroup().addContainerGap())
 										.addGroup(gl_panel.createSequentialGroup()
 												.addComponent(table, GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
 												.addGap(29)))));
 		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(42).addComponent(lblNewLabel).addGap(10)
-						.addComponent(btn_dat_phong_1, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(table, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE).addGap(18)
+				.addGroup(gl_panel.createSequentialGroup().addGap(42).addComponent(lblNewLabel).addGap(10).addGap(18).addComponent(table, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE).addGap(18)
 						.addComponent(btn_dat_phong, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE).addGap(33)));
 		panel.setLayout(gl_panel);
 
@@ -360,7 +332,7 @@ public class HomePage extends JFrame {
 							"select MaPhong, p.MaLoai , DonGia from phong p join loaiphong l on p.MaLoai = l.MaLoai where TinhTrang = 0;");
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "MaPhong", "MaLoai", "DonGia", "", "" };
+					String[] columnNames = { "MaPhong", "MaLoai", "DonGia" };
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 
@@ -370,14 +342,13 @@ public class HomePage extends JFrame {
 						Float DonGia = rs.getFloat("DonGia");
 
 						// create a single array of one row's worth of data
-						String[] data = { MaPhong, MaLoai, DonGia.toString(), "Cập nhật", "Xóa" };
+						String[] data = { MaPhong, MaLoai, DonGia.toString()};
 
 						// and add this row of data into the table model
 						tableModel.addRow(data);
 					}
 					table.setModel(tableModel);
-					table.getColumnModel().getColumn(3).setMaxWidth(80);
-					table.getColumnModel().getColumn(4).setMaxWidth(40);
+		
 
 					table.setDefaultEditor(Object.class, null);
 					table.changeSelection(1, 0, false, false);
