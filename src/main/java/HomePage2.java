@@ -332,7 +332,7 @@ public class HomePage2 extends JFrame {
 							"select MaPhong, p.MaLoai , DonGia from phong p join loaiphong l on p.MaLoai = l.MaLoai where TinhTrang = 0;");
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "MaPhong", "MaLoai", "DonGia" };
+					String[] columnNames = { "Mã phòng", "Mã loại", "Đơn giá"};
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 
@@ -370,7 +370,7 @@ public class HomePage2 extends JFrame {
 									+ "join thuephong  t on p.MaPhong = t.MaPhong;");
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "", "MaPhong", "MaLoai", "MaKhach", "DonGia", "NgayThue", "NgayTra" };
+					String[] columnNames = { "", "Mã phòng", "Mã loại", "Mã khách", "Đơn giá", "Ngày thuê", "Ngày trả" };
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 					int size = 0;
@@ -429,7 +429,7 @@ public class HomePage2 extends JFrame {
 					}
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "", "MaPhong", "MaLoai", "MaKhach", "DonGia", "NgayThue", "NgayTra" };
+					String[] columnNames = { "", "Mã phòng", "Mã loại", "Mã khách", "Đơn giá", "Ngày thuê", "Ngày trả" };
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 					int size = 0;
@@ -472,7 +472,7 @@ public class HomePage2 extends JFrame {
 					PreparedStatement stt = conn.prepareStatement("select * from khachthue;");
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "MaKhach", "SoCMT", "Ten", "NamSinh", "SDT" };
+					String[] columnNames = { "Mã khách", "Số CMT", "Tên", "Năm Sinh", "SDT" };
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 					int size = 0;
@@ -555,7 +555,7 @@ public class HomePage2 extends JFrame {
 									+ "join thuephong  t on p.MaPhong = t.MaPhong;");
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "", "MaPhong", "MaLoai", "MaKhach", "DonGia", "NgayThue", "NgayTra" };
+					String[] columnNames = { "", "Mã phòng", "Mã loại", "Mã khách", "Đơn giá", "Ngày thuê", "Ngày trả" };
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 					int size = 0;
