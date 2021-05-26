@@ -337,7 +337,7 @@ public class HomePage extends JFrame {
 		JButton btn_export = new JButton("In hóa đơn");
 
 		btn_export.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_export.setBounds(278, 537, 103, 34);
+		btn_export.setBounds(255, 538, 128, 34);
 		panel_4.add(btn_export);
 
 		JPanel panel_5 = new JPanel();
@@ -346,8 +346,18 @@ public class HomePage extends JFrame {
 
 		table_5 = new JTable();
 		table_5.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table_5.setBounds(153, 98, 338, 205);
+		table_5.setBounds(66, 111, 502, 200);
 		panel_5.add(table_5);
+		
+		JLabel lblNewLabel_4 = new JLabel("Danh sách loại phòng");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(226, 47, 266, 25);
+		panel_5.add(lblNewLabel_4);
+		
+		JButton btnNewButton = new JButton("Thêm loại phòng");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton.setBounds(226, 354, 177, 51);
+		panel_5.add(btnNewButton);
 		contentPane.setLayout(gl_contentPane);
 
 		menu_phong_co_san.addActionListener(new ActionListener() {
@@ -628,7 +638,7 @@ public class HomePage extends JFrame {
 					PreparedStatement stt = conn.prepareStatement("select * from loaiphong;");
 					ResultSet rs = stt.executeQuery();
 
-					String[] columnNames = { "Mã loại", "Đơn giá" };
+					String[] columnNames = { "Mã loại", "Đơn giá","","" };
 					DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 					tableModel.addRow(columnNames);
 					int size = 0;
@@ -638,7 +648,7 @@ public class HomePage extends JFrame {
 						Float DonGia = rs.getFloat("DonGia");
 
 						// create a single array of one row's worth of data
-						String[] data = { MaLoai, DonGia.toString() };
+						String[] data = { MaLoai, DonGia.toString(),"Sửa","Xóa" };
 
 						// and add this row of data into the table model
 						tableModel.addRow(data);
@@ -715,7 +725,8 @@ public class HomePage extends JFrame {
 				run_for_footer.addTab();
 				run_for_footer.setText("Chữ ký khách thuê");
 				
-			
+				
+
 				
 				// Write the Document in file system
 				try {
